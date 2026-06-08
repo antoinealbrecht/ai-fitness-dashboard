@@ -29,6 +29,18 @@ export default async function WeightPage() {
     }));
 
   const currentWeight = entries[0]?.weightLb;
+  const goalWeight = 170;
+
+  const weights = entries.map((entry) => entry.weightLb);
+
+  const highestWeight = weights.length > 0 ? Math.max(...weights) : null;
+  const lowestWeight = weights.length > 0 ? Math.min(...weights) : null;
+  const oldestWeight = entries[entries.length - 1]?.weightLb;
+
+  const totalChange =
+    currentWeight && oldestWeight ? currentWeight - oldestWeight : null;
+
+  const distanceFromGoal = currentWeight ? currentWeight - goalWeight : null;
 
   const sevenDayEntries = entries.slice(0, 7);
 
@@ -88,6 +100,41 @@ export default async function WeightPage() {
             <p className="text-sm text-zinc-400">Recent Trend</p>
             <p className="mt-2 text-3xl font-bold">
               {trend !== null ? `${trend.toFixed(1)} lb` : "--"}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-5">
+            <p className="text-sm text-zinc-400">Goal Weight</p>
+            <p className="mt-2 text-3xl font-bold">{goalWeight} lb</p>
+          </div>
+
+          <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-5">
+            <p className="text-sm text-zinc-400">From Goal</p>
+            <p className="mt-2 text-3xl font-bold">
+              {distanceFromGoal !== null
+                ? `${distanceFromGoal.toFixed(1)} lb`
+                : "--"}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-5">
+            <p className="text-sm text-zinc-400">Total Change</p>
+            <p className="mt-2 text-3xl font-bold">
+              {totalChange !== null ? `${totalChange.toFixed(1)} lb` : "--"}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-5">
+            <p className="text-sm text-zinc-400">Highest Logged</p>
+            <p className="mt-2 text-3xl font-bold">
+              {highestWeight !== null ? `${highestWeight} lb` : "--"}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-5">
+            <p className="text-sm text-zinc-400">Lowest Logged</p>
+            <p className="mt-2 text-3xl font-bold">
+              {lowestWeight !== null ? `${lowestWeight} lb` : "--"}
             </p>
           </div>
         </div>
