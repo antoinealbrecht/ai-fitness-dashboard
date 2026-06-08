@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { prisma } from "../lib/prisma";
 
 export async function createWeightEntry(weightLb: number) {
@@ -8,4 +9,6 @@ export async function createWeightEntry(weightLb: number) {
       weightLb,
     },
   });
+
+  revalidatePath("/weight");
 }
