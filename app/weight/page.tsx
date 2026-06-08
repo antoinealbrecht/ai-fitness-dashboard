@@ -1,7 +1,9 @@
 import { WeightChart } from "../../src/components/WeightChart";
-
 import { prisma } from "../../src/lib/prisma";
-import { createWeightEntry } from "../../src/server/weight";
+import {
+  createWeightEntry,
+  deleteWeightEntry,
+} from "../../src/server/weight";
 
 export default async function WeightPage() {
   async function saveWeight(formData: FormData) {
@@ -12,20 +14,19 @@ export default async function WeightPage() {
     await createWeightEntry(weight);
   }
 
- 
   const entries = await prisma.bodyWeightEntry.findMany({
     orderBy: {
       date: "desc",
     },
   });
 
-   const chartData = entries
-  .slice()
-  .reverse()
-  .map((entry) => ({
-    date: entry.date.toLocaleDateString(),
-    weight: entry.weightLb,
-  }));
+  const chartData = entries
+    .slice()
+    .reverse()
+    .map((entry) => ({
+      date: entry.date.toLocaleDateString(),
+      weight: entry.weightLb,
+    }));
 
   const currentWeight = entries[0]?.weightLb;
 
@@ -37,7 +38,8 @@ export default async function WeightPage() {
         sevenDayEntries.length
       : null;
 
-  const oldestRecentWeight = sevenDayEntries[sevenDayEntries.length - 1]?.weightLb;
+  const oldestRecentWeight =
+    sevenDayEntries[sevenDayEntries.length - 1]?.weightLb;
 
   const trend =
     currentWeight && oldestRecentWeight
@@ -89,9 +91,9 @@ export default async function WeightPage() {
             </p>
           </div>
         </div>
-        
+
         <div className="mt-8">
-            <WeightChart data={chartData} />
+          <WeightChart data={chartData} />
         </div>
 
         <section className="mt-10">
@@ -104,9 +106,24 @@ export default async function WeightPage() {
                 className="rounded-xl border border-zinc-800 bg-zinc-900 p-4"
               >
                 <p className="text-lg font-semibold">{entry.weightLb} lb</p>
+
                 <p className="text-sm text-zinc-400">
                   {entry.date.toLocaleDateString()}
                 </p>
+
+                <form
+                  action={async () => {
+                    "use server";
+                    await deleteWeightEntry(entry.id);
+                  }}
+                >
+                  <button
+                    type="submit"
+                    className="mt-3 rounded-lg bg-red-600 px-3 py-1 text-sm"
+                  >
+                    Delete
+                  </button>
+                </form>
               </div>
             ))}
           </div>

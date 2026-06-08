@@ -12,3 +12,13 @@ export async function createWeightEntry(weightLb: number) {
 
   revalidatePath("/weight");
 }
+
+export async function deleteWeightEntry(id: number) {
+  await prisma.bodyWeightEntry.delete({
+    where: {
+      id,
+    },
+  });
+
+  revalidatePath("/weight");
+}
