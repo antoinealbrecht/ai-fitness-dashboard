@@ -1,0 +1,15 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model BodyWeightEntry {
+  id        Int      @id @default(autoincrement())
+  weightLb  Float
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+}

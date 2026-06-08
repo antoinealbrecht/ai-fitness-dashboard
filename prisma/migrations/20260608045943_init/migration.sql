@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "BodyWeightEntry" (
+    "id" SERIAL NOT NULL,
+    "weightLb" DOUBLE PRECISION NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "BodyWeightEntry_pkey" PRIMARY KEY ("id")
+);
