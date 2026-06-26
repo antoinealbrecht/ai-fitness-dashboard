@@ -2,6 +2,7 @@ import { prisma } from "../../src/lib/prisma";
 import {
   addExerciseSet,
   createWorkout,
+  deleteExerciseSet,
 } from "../../src/server/workouts";
 
 export default async function WorkoutsPage() {
@@ -111,9 +112,25 @@ export default async function WorkoutsPage() {
 
                       <div className="mt-2 space-y-1">
                         {workoutExercise.sets.map((set) => (
-                          <p key={set.id} className="text-sm text-zinc-400">
+                        <div
+                            key={set.id}
+                            className="flex items-center justify-between text-sm text-zinc-400"
+                        >
+                            <p>
                             {set.weight} lb × {set.reps} reps @ {set.rir} RIR
-                          </p>
+                            </p>
+
+                            <form
+                            action={async () => {
+                                "use server";
+                                await deleteExerciseSet(set.id);
+                            }}
+                            >
+                            <button type="submit" className="text-red-400">
+                                Delete
+                            </button>
+                            </form>
+                        </div>
                         ))}
                       </div>
                     </div>

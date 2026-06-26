@@ -59,3 +59,13 @@ export async function addExerciseSet(formData: FormData) {
 
   revalidatePath("/workouts");
 }
+
+export async function deleteExerciseSet(id: number) {
+  await prisma.exerciseSet.delete({
+    where: {
+      id,
+    },
+  });
+
+  revalidatePath("/workouts");
+}
