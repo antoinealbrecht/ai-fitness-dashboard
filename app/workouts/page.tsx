@@ -56,8 +56,15 @@ export default async function WorkoutsPage() {
                   {workout.date.toLocaleDateString()}
                 </p>
 
-                <form action={addExerciseSet} className="mt-5 grid gap-3 md:grid-cols-5">
+                <form action={addExerciseSet} className="mt-5 grid gap-3 md:grid-cols-6">
                   <input type="hidden" name="workoutId" value={workout.id} />
+                  
+                  <input
+                  name="muscleGroup"
+                  placeholder="Muscle group"
+                  className="rounded-lg bg-zinc-800 px-3 py-2 text-white outline-none"
+                  required
+                  />  
 
                   <input
                     name="exerciseName"
@@ -102,12 +109,15 @@ export default async function WorkoutsPage() {
 
                 <div className="mt-5 space-y-3">
                   {workout.exercises.map((workoutExercise) => (
-                    <div
+                      <div
                       key={workoutExercise.id}
                       className="rounded-lg border border-zinc-800 bg-zinc-950 p-4"
                     >
                       <p className="font-semibold">
-                        {workoutExercise.exercise.name}
+                      {workoutExercise.exercise.name}
+                      </p>
+                      <p className="text-sm text-zinc-500">
+                      {workoutExercise.exercise.muscleGroup}
                       </p>
 
                       <div className="mt-2 space-y-1">
