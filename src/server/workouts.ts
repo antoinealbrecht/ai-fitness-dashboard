@@ -32,12 +32,21 @@ export async function addExerciseSet(formData: FormData) {
     },
   });
 
-  const workoutExercise = await prisma.workoutExercise.create({
-    data: {
+  let workoutExercise = await prisma.workoutExercise.findFirst({
+    where: {
       workoutId,
       exerciseId: exercise.id,
     },
   });
+
+  if (!workoutExercise) {
+    workoutExercise = await prisma.workoutExercise.create({
+      data: {
+        workoutId,
+        exerciseId: exercise.id,
+      },
+    });
+  }
 
   await prisma.exerciseSet.create({
     data: {
