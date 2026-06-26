@@ -13,3 +13,38 @@ model BodyWeightEntry {
   date      DateTime @default(now())
   createdAt DateTime @default(now())
 }
+
+model Workout {
+  id        Int           @id @default(autoincrement())
+  name      String
+  date      DateTime      @default(now())
+  exercises WorkoutExercise[]
+}
+
+model Exercise {
+  id        Int                @id @default(autoincrement())
+  name      String             @unique
+  workouts  WorkoutExercise[]
+}
+
+model WorkoutExercise {
+  id          Int         @id @default(autoincrement())
+  workout     Workout     @relation(fields: [workoutId], references: [id])
+  workoutId   Int
+
+  exercise    Exercise    @relation(fields: [exerciseId], references: [id])
+  exerciseId  Int
+
+  sets        ExerciseSet[]
+}
+
+model ExerciseSet {
+  id                Int               @id @default(autoincrement())
+
+  workoutExercise   WorkoutExercise   @relation(fields: [workoutExerciseId], references: [id])
+  workoutExerciseId Int
+
+  weight            Float
+  reps              Int
+  rir               Float
+}
