@@ -14,3 +14,39 @@ export async function createWorkout(formData: FormData) {
 
   revalidatePath("/workouts");
 }
+
+export async function addExerciseSet(formData: FormData) {
+  const workoutId = Number(formData.get("workoutId"));
+  const exerciseName = String(formData.get("exerciseName"));
+  const weight = Number(formData.get("weight"));
+  const reps = Number(formData.get("reps"));
+  const rir = Number(formData.get("rir"));
+
+  const exercise = await prisma.exercise.upsert({
+    where: {
+      name: exerciseName,
+    },
+    update: {},
+    create: {
+      name: exerciseName,
+    },
+  });
+
+  const workoutExercise = await prisma.workoutExercise.create({
+    data: {
+      workoutId,
+      exerciseId: exercise.id,
+    },
+  });
+
+  await prisma.exerciseSet.create({
+    data: {
+      workoutExerciseId: workoutExercise.id,
+      weight,
+      reps,
+      rir,
+    },
+  });
+
+  revalidatePath("/workouts");
+}
