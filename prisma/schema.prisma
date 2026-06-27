@@ -14,6 +14,21 @@ model BodyWeightEntry {
   createdAt DateTime @default(now())
 }
 
+model NutritionEntry {
+  id        Int      @id @default(autoincrement())
+  date      DateTime @default(now())
+
+  calories  Int
+  protein   Int
+  carbs     Int
+  fat       Int
+
+  adherence Int
+  notes     String?
+
+  createdAt DateTime @default(now())
+}
+
 model Workout {
   id        Int           @id @default(autoincrement())
   name      String
@@ -22,9 +37,10 @@ model Workout {
 }
 
 model Exercise {
-  id        Int                @id @default(autoincrement())
-  name      String             @unique
-  workouts  WorkoutExercise[]
+  id          Int                @id @default(autoincrement())
+  name        String             @unique
+  muscleGroup String             @default("Unassigned")
+  workouts    WorkoutExercise[]
 }
 
 model WorkoutExercise {
