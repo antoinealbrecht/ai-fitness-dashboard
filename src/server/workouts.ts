@@ -18,6 +18,7 @@ export async function createWorkout(formData: FormData) {
 export async function addExerciseSet(formData: FormData) {
   const workoutId = Number(formData.get("workoutId"));
   const exerciseName = String(formData.get("exerciseName"));
+  const muscleGroup = String(formData.get("muscleGroup"));
   const weight = Number(formData.get("weight"));
   const reps = Number(formData.get("reps"));
   const rir = Number(formData.get("rir"));
@@ -26,9 +27,12 @@ export async function addExerciseSet(formData: FormData) {
     where: {
       name: exerciseName,
     },
-    update: {},
+    update: {
+      muscleGroup,
+    },
     create: {
       name: exerciseName,
+      muscleGroup,
     },
   });
 
@@ -58,9 +62,10 @@ export async function addExerciseSet(formData: FormData) {
   });
 
   revalidatePath("/workouts");
+  revalidatePath(`/workouts/${workoutId}`);
 }
 
-export async function deleteExerciseSet(id: number) {
+export async function deleteExerciseSet(id: number, workoutId: number) {
   await prisma.exerciseSet.delete({
     where: {
       id,
@@ -68,4 +73,5 @@ export async function deleteExerciseSet(id: number) {
   });
 
   revalidatePath("/workouts");
+  revalidatePath(`/workouts/${workoutId}`);
 }
