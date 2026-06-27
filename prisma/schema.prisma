@@ -29,6 +29,21 @@ model NutritionEntry {
   createdAt DateTime @default(now())
 }
 
+model RecoveryEntry {
+  id           Int      @id @default(autoincrement())
+  date         DateTime @default(now())
+
+  sleepHours   Float
+  sleepQuality Int
+  fatigue      Int
+  soreness     Int
+  stress       Int
+
+  notes        String?
+
+  createdAt    DateTime @default(now())
+}
+
 model Workout {
   id        Int           @id @default(autoincrement())
   name      String
