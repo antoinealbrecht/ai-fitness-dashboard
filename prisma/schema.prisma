@@ -35,9 +35,6 @@ model RecoveryEntry {
 
   sleepHours   Float
   sleepQuality Int
-  fatigue      Int
-  soreness     Int
-  stress       Int
 
   notes        String?
 
