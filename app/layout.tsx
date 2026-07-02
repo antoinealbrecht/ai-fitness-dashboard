@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hypertrophy Dashboard",
+  title: "Well",
   description: "Evidence-based hypertrophy training dashboard",
 };
 
@@ -31,7 +31,7 @@ export default function RootLayout({
       <body className="min-h-full bg-zinc-950 text-white">
         <div className="flex min-h-screen">
           <aside className="hidden w-64 border-r border-zinc-800 bg-zinc-950 p-6 md:block">
-            <h1 className="text-xl font-bold">Hypertrophy</h1>
+            <h1 className="text-xl font-bold">Well</h1>
 
             <nav className="mt-8 space-y-2">
               <Link
